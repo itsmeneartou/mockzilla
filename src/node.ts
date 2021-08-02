@@ -35,8 +35,13 @@ export class MockzillaNode {
     private readonly proxy: any;
 
     private disabled = false;
-
-    private children: { [s: string]: ChildType } = {};
+    private runtimeNode = new MockzillaNode("runtime");
+    private children: { [s: string]: ChildType } = { runtime:{
+        type:"node",
+        value:this.runtimeNode.getProxy(),
+        node:this.runtimeNode
+    }
+    };
 
     public constructor(path: string) {
         this.path = path;
