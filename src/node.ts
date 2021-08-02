@@ -38,7 +38,7 @@ export class MockzillaNode {
 
     private children: { [s: string]: ChildType } = {};
 
-    public constructor(path: string, keys?: string[]) {
+    public constructor(path: string, childPaths?: string[]) {
         this.path = path;
         this.proxy = new Proxy(
             {},
@@ -67,10 +67,12 @@ export class MockzillaNode {
             }
         );
 
-        if (keys != null)keys.forEach(key=>{
-            this.getChildNode(key);
+        if (childPaths != null){
+            childPaths.forEach(childPath=>{
+            this.getNested(childPath.split("."))
         }) 
     }
+}
 
     private pathTo = (key: string) => (key ? `${this.path}.${key}` : this.path);
 
