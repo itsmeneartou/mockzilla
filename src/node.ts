@@ -95,6 +95,7 @@ export class MockzillaNode {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const nestedKey = keys.pop()!;
         const nestedNode = keys.reduce((node, key) => node.getChildNode(key), this as MockzillaNode);
+        console.log(this.children);
         return [nestedKey, nestedNode] as const;
     }
 
