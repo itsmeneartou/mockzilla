@@ -98,8 +98,8 @@ const deepMockHandler: ProxyHandler<Target> = {
 
 const autoCleanupNodes: MockzillaNode[] = [];
 
-export function deepMock<T>(name: string, autoCleanup = true) {
-    const rootNode = new MockzillaNode(name);
+export function deepMock<T>(name: string, autoCleanup = true,keys?: string[]) {
+    const rootNode = new MockzillaNode(name,keys);
     const proxy: T = rootNode.getProxy();
     const mock: MockzillaDeep<T> = new Proxy({ path: "", children: {}, rootNode }, deepMockHandler) as any;
     if (autoCleanup) autoCleanupNodes.push(rootNode);

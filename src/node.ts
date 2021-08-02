@@ -4,7 +4,6 @@ import { iterableEquality } from "expect/build/utils";
 import { equals } from "expect/build/jasmineUtils";
 
 import { colorizeStack, MockzillaError } from "./error";
-import { childrens } from "./children";
 import { MockzillaExpectation } from "./types";
 
 const EXPECTATION = chalk.green("Expectation");
@@ -37,9 +36,9 @@ export class MockzillaNode {
 
     private disabled = false;
 
-    private children: { [s: string]: ChildType } = childrens;
+    private children: { [s: string]: ChildType } = {};
 
-    public constructor(path: string) {
+    public constructor(path: string, keys?: string[]) {
         this.path = path;
         this.proxy = new Proxy(
             {},
@@ -67,6 +66,10 @@ export class MockzillaNode {
                 defineProperty: () => this.disabledCheckNotImplemented("defineProperty", false),
             }
         );
+
+        if (keys != null)keys.forEach(key=>{
+            this.getChildNode(key);
+        }) 
     }
 
     private pathTo = (key: string) => (key ? `${this.path}.${key}` : this.path);
